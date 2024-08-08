@@ -37,8 +37,8 @@ export default {
           { text: 'Añadir nueva noticia', component: 'AddNoticeForm' },
           { text: 'Añadir publicidad de restaurante', component: 'AddPublicidadForm' },
           { text: 'Añadir usuario participante en el proyecto', component: 'AddUserForm' }
-      ];
-    } else if (this.role === 'comercial') {
+        ];
+      } else if (this.role === 'comercial') {
         return [
           { text: 'Ver restaurantes', component: 'VerRestaurantes' },
           { text: 'Añadir nuevo restaurante', component: 'AddRestaurantForm' },
@@ -100,6 +100,7 @@ export default {
   background-color: #e0e0e0;
   padding: 20px;
   border-radius: 10px;
+  overflow: auto; /* Permitir desplazamiento */
 }
 
 .control-panel h2 {
