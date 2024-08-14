@@ -62,7 +62,6 @@ export default {
           title: noticia.titulo,
           content: noticia.descripcion
         }));
-        console.log('Noticias obtenidas:', this.newsItems);
       } catch (error) {
         console.error('Error al obtener noticias:', error);
       }

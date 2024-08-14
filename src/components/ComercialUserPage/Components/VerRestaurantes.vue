@@ -75,7 +75,6 @@ export default {
           }
         }
         this.filteredRestaurants = this.restaurants; // Inicialmente, todos los restaurantes están en la lista filtrada
-        console.log('Restaurantes obtenidos:', this.restaurants);
       } catch (error) {
         console.error('Error al obtener los restaurantes:', error);
       }
@@ -98,8 +97,6 @@ export default {
       }
     },
     isInactive(activo) {
-      // Verifica el valor de activo y asegúrate de que se maneje como booleano
-      console.log('Activo:', activo);
       return !activo; // Si activo es false, el restaurante está inactivo
     },
     filterRestaurants() {

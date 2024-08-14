@@ -74,7 +74,6 @@
             }
           }
           this.filteredUsers = this.users; // Inicialmente, todos los usuarios están en la lista filtrada
-          console.log('Usuarios obtenidos:', this.users);
         } catch (error) {
           console.error('Error al obtener los usuarios:', error);
         }

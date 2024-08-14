@@ -54,9 +54,7 @@ export default {
           if (publicidad.foto) {
             try {
               const imageResponse = await axios.get(`/api/publicidad/image/${publicidad.id_publicidad}`);
-              console.log('Imagen:', imageResponse.data.imagePath);
               publicidad.image = `https://restaurantessolidarios.es:8081/api/image/publicidad/${imageResponse.data.imagePath}`;
-              console.log('Imagen:', publicidad.image);
             } catch (error) {
               console.error(`Error al obtener la imagen para la publicidad con ID ${publicidad.id_publicidad}:`, error);
               publicidad.image = ''; // No hay imagen para esta publicidad
@@ -71,8 +69,6 @@ export default {
           content: publicidad.descripcion,
           image: publicidad.image
         }));
-
-        console.log ('Publicidades:', this.publicidades);
       } catch (error) {
         console.error('Error al obtener publicidades:', error);
       }
