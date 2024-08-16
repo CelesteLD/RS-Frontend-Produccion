@@ -33,10 +33,10 @@ export default {
           { text: 'Ver restaurantes', component: 'VerRestaurantes' },
           { text: 'Añadir nuevo restaurante', component: 'AddRestaurantForm' },
           { text: 'Ver usuarios', component: 'VerUsuarios' },
-          { text: 'Añadir nuevo usuario administrador', component: 'AddUserAdminForm' },
+          { text: 'Añadir usuario participante en el proyecto', component: 'AddUserForm' },
           { text: 'Añadir nueva noticia', component: 'AddNoticeForm' },
           { text: 'Añadir publicidad de restaurante', component: 'AddPublicidadForm' },
-          { text: 'Añadir usuario participante en el proyecto', component: 'AddUserForm' }
+          { text: 'Añadir nuevo usuario administrador', component: 'AddUserAdminForm' },
         ];
       } else if (this.role === 'comercial') {
         return [

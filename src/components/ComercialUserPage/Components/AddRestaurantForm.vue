@@ -29,12 +29,8 @@
             <input type="text" id="telefono" v-model="restaurant.telefono" required />
           </div>
           <div class="form-group">
-            <label for="horario_donacion_inicio">Horario de Donación (Inicio)</label>
-            <input type="text" id="horario_donacion_inicio" v-model="restaurant.horario_donacion_inicio" required />
-          </div>
-          <div class="form-group">
-            <label for="horario_donacion_fin">Horario de Donación (Fin)</label>
-            <input type="text" id="horario_donacion_fin" v-model="restaurant.horario_donacion_fin" required />
+            <label for="email">Correo Electrónico</label>
+            <input type="email" id="email" v-model="restaurant.email" required />
           </div>
           <div class="form-group">
             <label for="capacidad_donacion">Capacidad de Donación</label>
@@ -72,12 +68,13 @@ export default {
         id_municipio: null,
         descripcion: '',
         telefono: '',
-        horario_donacion_inicio: '',
-        horario_donacion_fin: '',
+        email: '',
         capacidad_donacion: 'diariamente',
-        activo: 1 // Campo activo por defecto a 1
+        activo: 1,
+        horario_donacion_inicio: '00:00',
+        horario_donacion_fin: '00:00'
       },
-      imagen: null, // Almacena la imagen seleccionada
+      imagen: null,
       municipios: [
         { id: 1, nombre: 'Adeje' },
         { id: 2, nombre: 'Arafo' },
@@ -114,7 +111,23 @@ export default {
   },
   methods: {
     handleImageUpload(event) {
-      this.imagen = event.target.files[0]; // Almacena la imagen seleccionada
+      this.imagen = event.target.files[0];
+    },
+    generateUsername() {
+      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let randomPart = '';
+      for (let i = 0; i < 4; i++) {
+        randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return `${randomPart}_rest_solidarios`;
+    },
+    generatePassword() {
+      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+      let password = '';
+      for (let i = 0; i < 8; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return password;
     },
     async submitForm() {
       try {
@@ -125,7 +138,7 @@ export default {
         if (this.imagen) {
           const formData = new FormData();
           formData.append('imagen', this.imagen);
-          formData.append('nombre', this.restaurant.nombre); // Añadir el nombre del restaurante
+          formData.append('nombre', this.restaurant.nombre);
 
           const imageResponse = await axios.post('/api/rest/addimage', formData, {
             headers: {
@@ -165,6 +178,34 @@ export default {
           }
         });
 
+        // Generar credenciales para el usuario del restaurante
+        const username = this.generateUsername();
+        const password = this.generatePassword();
+
+        // Enviar datos para crear el usuario del restaurante
+        await axios.post('/api/user/restaurante/add', {
+          id_restaurante: lastRestaurantId,
+          username: username,
+          email: this.restaurant.email,
+          password: password
+        }, {
+          headers: {
+            Authorization: `${token}`
+          }
+        });
+
+        // Enviar correo con las credenciales al restaurante
+        await axios.post('/api/email/send/credentials', {
+          to: this.restaurant.email,
+          restaurantName: this.restaurant.nombre,
+          loginUsername: username,
+          loginPassword: password
+        }, {
+          headers: {
+            Authorization: `${token}`
+          }
+        });
+
         // Limpiar el formulario
         this.restaurant = {
           nombre: '',
@@ -172,12 +213,14 @@ export default {
           id_municipio: null,
           descripcion: '',
           telefono: '',
-          horario_donacion_inicio: '',
-          horario_donacion_fin: '',
+          email: '',
           capacidad_donacion: 'diariamente',
-          activo: 1 // Restablecer a 1
+          activo: 1,
+          horario_donacion_inicio: '00:00',
+          horario_donacion_fin: '00:00'
         };
         this.imagen = null;
+
       } catch (error) {
         console.error('Error al añadir restaurante:', error);
         alert('Error al añadir restaurante');
@@ -193,20 +236,20 @@ export default {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box; /* Incluye el padding en el ancho total */
+  box-sizing: border-box;
   width: 100%;
 }
 
 .form-row {
   display: flex;
-  flex-wrap: wrap; /* Permite que las columnas se ajusten en pantallas más pequeñas */
+  flex-wrap: wrap;
 }
 
 .form-column {
   flex: 1;
-  min-width: 300px; /* Ajusta el ancho mínimo según sea necesario */
+  min-width: 300px;
   padding: 10px;
-  box-sizing: border-box; /* Incluye el padding en el ancho total */
+  box-sizing: border-box;
 }
 
 .form-group {
@@ -225,12 +268,12 @@ export default {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  box-sizing: border-box; /* Incluye el padding en el ancho del input */
+  box-sizing: border-box;
 }
 
 .button-container {
   display: flex;
-  justify-content: center; /* Centra el contenedor del botón */
+  justify-content: center;
 }
 
 button {
