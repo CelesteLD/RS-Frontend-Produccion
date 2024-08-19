@@ -20,6 +20,7 @@
 import RestaurantCard from './RestaurantCard.vue';
 import axios from '../../../backend.js';
 import defaultImage from '@/assets/example.jpg';
+import { API_BASE_URL } from '../../../config.js'
 
 export default {
   components: {
@@ -54,7 +55,7 @@ export default {
           try {
             const imageResponse = await axios.get(`/api/image/${topDonors[i].id}`);
             const name = imageResponse.data.imagePath;
-            topDonors[i].imageSrc = `https://restaurantessolidarios.es:8081/api/image/serve/${name}`;
+            topDonors[i].imageSrc = `${API_BASE_URL}/api/image/serve/${name}`;
           } catch (error) {
             console.error(`Error al obtener la imagen para el restaurante con ID ${topDonors[i].id}:`, error);
             topDonors[i].imageSrc = defaultImage; // No hay imagen para este restaurante

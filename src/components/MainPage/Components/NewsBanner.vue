@@ -21,6 +21,7 @@
 
 <script>
 import axios from '../../../backend.js';
+import { API_BASE_URL } from '../../../config.js'
 
 export default {
   name: 'NewsBanner',
@@ -52,7 +53,7 @@ export default {
           if (noticia.foto) {
             try {
               const imageResponse = await axios.get(`/api/noticias/image/${noticia.id_noticia}`);
-              noticia.image = `https://restaurantessolidarios.es:8081/api/image/noticias/${imageResponse.data.imagePath}`;
+              noticia.image = `${API_BASE_URL}/api/image/noticias/${imageResponse.data.imagePath}`;
             } catch (error) {
               console.error(`Error al obtener la imagen para la noticia con ID ${noticia.id_noticia}:`, error);
               noticia.image = ''; // No hay imagen para esta noticia

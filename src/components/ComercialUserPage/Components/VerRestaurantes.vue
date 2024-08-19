@@ -36,6 +36,7 @@
 <script>
 import axios from '@/backend';
 import defaultImage from '@/assets/example.jpg'; // Importa la imagen por defecto
+import { API_BASE_URL } from '../../../config.js'
 
 export default {
   name: 'VerRestaurantes',
@@ -67,7 +68,7 @@ export default {
               }
             });
             const name = imageResponse.data.imagePath;
-            restaurant.image = `https://restaurantessolidarios.es:8081/api/image/serve/${name}`;
+            restaurant.image = `${API_BASE_URL}/api/image/serve/${name}`;
 
           } catch (error) {
             console.error(`Error al obtener la imagen para el restaurante con ID ${restaurant.id}:`, error);

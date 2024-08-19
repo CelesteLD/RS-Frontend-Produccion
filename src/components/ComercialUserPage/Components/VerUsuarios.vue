@@ -35,6 +35,7 @@
   <script>
   import axios from '@/backend';
   import defaultImage from '@/assets/example.jpg'; // Importa la imagen por defecto
+  import { API_BASE_URL } from '../../../config.js'
   
   export default {
     name: 'VerUsuarios',
@@ -66,7 +67,7 @@
                 }
               });
               const name = imageResponse.data.imagePath;
-              user.image = `https://restaurantessolidarios.es:8081/api/image/user/${name}`;
+              user.image = `${API_BASE_URL}/api/image/user/${name}`;
   
             } catch (error) {
               console.error(`Error al obtener la imagen para el usuario con ID ${user.id}:`, error);

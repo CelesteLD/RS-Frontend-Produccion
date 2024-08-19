@@ -23,6 +23,7 @@
 
 <script>
 import axios from '../../../backend.js';
+import { API_BASE_URL } from '../../../config.js'
 
 export default {
   name: 'PublicidadBanner',
@@ -54,7 +55,7 @@ export default {
           if (publicidad.foto) {
             try {
               const imageResponse = await axios.get(`/api/publicidad/image/${publicidad.id_publicidad}`);
-              publicidad.image = `https://restaurantessolidarios.es:8081/api/image/publicidad/${imageResponse.data.imagePath}`;
+              publicidad.image = `${API_BASE_URL}/api/image/publicidad/${imageResponse.data.imagePath}`;
             } catch (error) {
               console.error(`Error al obtener la imagen para la publicidad con ID ${publicidad.id_publicidad}:`, error);
               publicidad.image = ''; // No hay imagen para esta publicidad
