@@ -1,21 +1,26 @@
 <template>
   <div class="main-page">
     <AppNavbar currentPage="inicio" />
-    <SocialMediaLinks class="social-media-links" />
-    <div>
-      <h1 class="main-title">Bienvenidos a Restaurantes Solidarios</h1>
+    <div v-if="isUnderDevelopment" class="development-container">
+      <h1 class="development-message">Proyecto en desarrollo</h1>
     </div>
-    <div class="content-container">
-      <div class="main-content">
-        <TopDonorRestaurants />
-        <div class="publicidad-section">
-          <h2 class="section-title">Espacio publicitario</h2>
-          <div class="banners-container">
-            <div class="banner publicidad-banner-container">
-              <PublicidadBanner />
-            </div>
-            <div class="banner news-banner-container">
-              <NewsBanner />
+    <div v-else>
+      <SocialMediaLinks class="social-media-links" />
+      <div>
+        <h1 class="main-title">Bienvenidos a Restaurantes Solidarios</h1>
+      </div>
+      <div class="content-container">
+        <div class="main-content">
+          <TopDonorRestaurants />
+          <div class="publicidad-section">
+            <h2 class="section-title">Espacio publicitario</h2>
+            <div class="banners-container">
+              <div class="banner publicidad-banner-container">
+                <PublicidadBanner />
+              </div>
+              <div class="banner news-banner-container">
+                <NewsBanner />
+              </div>
             </div>
           </div>
         </div>
@@ -45,7 +50,8 @@ export default {
     return {
       activeDot: 0,
       activeDotVertical: 0,
-      newsItems: []
+      newsItems: [],
+      isUnderDevelopment: true
     };
   },
   computed: {
@@ -62,6 +68,7 @@ export default {
           title: noticia.titulo,
           content: noticia.descripcion
         }));
+        console.log('Noticias obtenidas:', this.newsItems);
       } catch (error) {
         console.error('Error al obtener noticias:', error);
       }
@@ -75,6 +82,14 @@ export default {
   },
   mounted() {
     this.fetchNoticias();
+    
+    // Verificar si la fecha actual es menor al 2 de septiembre de 2024
+    const currentDate = new Date();
+    const projectStartDate = new Date('2024-09-29');
+
+    if (currentDate >= projectStartDate) {
+      this.isUnderDevelopment = false;
+    }
   }
 };
 </script>
@@ -86,6 +101,23 @@ export default {
   align-items: center;
   width: 100%;
   box-sizing: border-box;
+  min-height: 100vh;
+  justify-content: space-between;
+}
+
+.development-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.development-message {
+  font-size: 2em;
+  text-align: center;
+  margin: 20px 0;
 }
 
 .main-title {

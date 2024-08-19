@@ -1,9 +1,14 @@
 <template>
-  <div>
+  <div class="page-container">
     <AppNavbar currentPage="restaurantes-solidarios" />
     <div class="main-content">
-      <h1>Restaurantes solidarios adheridos al proyecto</h1>
-      <RestaurantList />
+      <div v-if="isUnderDevelopment" class="development-message-container">
+        <h1>Proyecto en desarrollo</h1>
+      </div>
+      <div v-else>
+        <h1>Restaurantes solidarios adheridos al proyecto</h1>
+        <RestaurantList />
+      </div>
     </div>
     <AppFooter />
   </div>
@@ -20,17 +25,48 @@ export default {
     AppNavbar,
     AppFooter,
     RestaurantList
+  },
+  data() {
+    return {
+      isUnderDevelopment: true
+    };
+  },
+  mounted() {
+    // Verificar si la fecha actual es menor al 2 de septiembre de 2024
+    const currentDate = new Date();
+    const projectStartDate = new Date('2024-09-29');
+
+    if (currentDate >= projectStartDate) {
+      this.isUnderDevelopment = false;
+    }
   }
 };
 </script>
 
 <style scoped>
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .main-content {
-  padding: 20px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  padding: 20px;
+}
+
+.development-message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 h1 {
-  margin-top: 50px;
+  margin: 0;
 }
 </style>
