@@ -71,7 +71,7 @@ export default {
 
           } catch (error) {
             console.error(`Error al obtener la imagen para el restaurante con ID ${restaurant.id}:`, error);
-            restaurant.image = null; // No hay imagen para este restaurante
+            restaurant.image = null;
           }
         }
       } catch (error) {

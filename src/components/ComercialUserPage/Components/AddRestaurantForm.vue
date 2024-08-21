@@ -44,7 +44,7 @@
         <div class="form-column">
           <div class="form-group">
             <label for="imagen">Imagen del restaurante</label>
-            <input type="file" id="imagen" @change="handleImageUpload" />
+            <input type="file" id="imagen" ref="imagenInput" @change="handleImageUpload" />
           </div>
         </div>
       </div>
@@ -113,16 +113,8 @@ export default {
     handleImageUpload(event) {
       this.imagen = event.target.files[0];
     },
-    generateUsername() {
-      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let randomPart = '';
-      for (let i = 0; i < 4; i++) {
-        randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return `${randomPart}_rest_solidarios`;
-    },
     generatePassword() {
-      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
       let password = '';
       for (let i = 0; i < 8; i++) {
         password += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -168,6 +160,10 @@ export default {
         });
         const lastRestaurantId = lastRestaurantResponse.data.id;
 
+        // Generar credenciales para el usuario del restaurante usando el ID del último restaurante
+        const username = `${lastRestaurantId}_rest_solidarios`;
+        const password = this.generatePassword();
+
         // Hacer la solicitud para guardar la ruta de la imagen con el ID del restaurante
         await axios.post('/api/image/fill', {
           id_restaurante: lastRestaurantId,
@@ -177,10 +173,6 @@ export default {
             Authorization: `${token}`
           }
         });
-
-        // Generar credenciales para el usuario del restaurante
-        const username = this.generateUsername();
-        const password = this.generatePassword();
 
         // Enviar datos para crear el usuario del restaurante
         await axios.post('/api/user/restaurante/add', {
@@ -221,6 +213,9 @@ export default {
         };
         this.imagen = null;
 
+        // Vaciar el campo de archivo
+        this.$refs.imagenInput.value = null;
+
       } catch (error) {
         console.error('Error al añadir restaurante:', error);
         alert('Error al añadir restaurante');
@@ -229,6 +224,8 @@ export default {
   }
 };
 </script>
+
+
 
 <style scoped>
 .add-restaurant-form {
