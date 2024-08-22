@@ -1,6 +1,7 @@
 <template>
   <div>
     <AppNavbar currentPage="proyecto" />
+    <AccessibilityMenu class="accessibility-position" />
     <div class="content">
       <h1 class="section-title">Conoce más sobre el proyecto Restaurantes Solidarios</h1>
       <ProyectInfo />
@@ -16,7 +17,8 @@ import AppNavbar from '../../Generales/NavBar/AppNavbar.vue';
 import ProyectInfo from '../../Proyecto/Components/ProyectInfo.vue';
 import JustifyInfo from '../../Proyecto/Components/JustifyInfo.vue';
 import ObjectiveInfo from '../../Proyecto/Components/ObjectiveInfo.vue';
-import AppFooter from '../../Generales/Footer/AppFooter.vue'; // Importa el componente AppFooter
+import AppFooter from '../../Generales/Footer/AppFooter.vue';
+import AccessibilityMenu from '../../Generales/Accesibilidad/AccesibilityMenu.vue'; // Importa el componente de accesibilidad
 
 export default {
   name: 'ProyectoPage',
@@ -25,7 +27,8 @@ export default {
     ProyectInfo,
     JustifyInfo,
     ObjectiveInfo,
-    AppFooter, // Declara el componente AppFooter
+    AppFooter,
+    AccessibilityMenu, // Declara el componente AccessibilityMenu
   },
 };
 </script>
@@ -45,6 +48,13 @@ export default {
   text-align: center;
   margin-bottom: 20px; /* Espacio entre el título y el primer componente */
   color: #333; /* Color del texto */
+}
+
+/* Posiciona el componente de accesibilidad debajo del navbar */
+.accessibility-position {
+  position: absolute;
+  top: 120px; /* Ajusta esta altura según la altura de tu navbar */
+  left: 10px;
 }
 
 /* Estilos adicionales para asegurar que el footer esté centrado */

@@ -1,6 +1,7 @@
 <template>
   <div class="page-container">
     <AppNavbar currentPage="restaurantes-solidarios" />
+    <AccessibilityMenu class="accessibility-position" /> <!-- Añadir el componente de accesibilidad aquí -->
     <div class="main-content">
       <div v-if="isUnderDevelopment" class="development-message-container">
         <h1>Proyecto en desarrollo</h1>
@@ -18,13 +19,15 @@
 import AppNavbar from '@/components/Generales/NavBar/AppNavbar.vue';
 import AppFooter from '@/components/Generales/Footer/AppFooter.vue';
 import RestaurantList from '@/components/RestaurantesSolidariosPage/Components/RestaurantList.vue'; // Ajusta la ruta según tu estructura de proyecto
+import AccessibilityMenu from '@/components/Generales/Accesibilidad/AccesibilityMenu.vue'; // Importa el componente de accesibilidad
 
 export default {
   name: 'RestaurantesSolidariosPage',
   components: {
     AppNavbar,
     AppFooter,
-    RestaurantList
+    RestaurantList,
+    AccessibilityMenu // Declara el componente de accesibilidad
   },
   data() {
     return {
@@ -68,5 +71,12 @@ export default {
 
 h1 {
   margin: 0;
+}
+
+/* Posiciona el componente de accesibilidad debajo del navbar */
+.accessibility-position {
+  position: absolute;
+  top: 120px; /* Ajusta esta altura según la altura de tu navbar */
+  left: 10px;
 }
 </style>

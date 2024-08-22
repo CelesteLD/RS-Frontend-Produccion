@@ -1,6 +1,7 @@
 <template>
   <div>
     <AppNavbar currentPage="contacto" />
+    <AccessibilityMenu class="accessibility-position" /> <!-- Añadir el componente de accesibilidad aquí -->
     <div class="content">
       <ParticipationBox />
       <h1 class="section-title">Contacta con nosotros</h1>
@@ -52,7 +53,6 @@
           <button type="submit">Enviar</button>
         </form>
       </div>
-      <ContactForm />
     </div>
     <AppFooter /> <!-- Añadir el componente AppFooter aquí -->
   </div>
@@ -63,6 +63,7 @@ import AppNavbar from '../../Generales/NavBar/AppNavbar.vue';
 import ParticipationBox from '../../ContactoPage/Components/ParticipationBox.vue';
 import ContactBox from '../../ContactoPage/Components/ContactBox.vue';
 import AppFooter from '../../Generales/Footer/AppFooter.vue'; // Importa el componente AppFooter
+import AccessibilityMenu from '../../Generales/Accesibilidad/AccesibilityMenu.vue'; // Importa el componente de accesibilidad
 import axios from '../../../backend.js'; // Importa la instancia de Axios
 
 export default {
@@ -71,7 +72,8 @@ export default {
     AppNavbar,
     ParticipationBox,
     ContactBox,
-    AppFooter // Declara el componente AppFooter
+    AppFooter, // Declara el componente AppFooter
+    AccessibilityMenu, // Declara el componente de accesibilidad
   },
   data() {
     return {
@@ -203,5 +205,12 @@ button {
 
 button:hover {
   background-color: #6bc9db;
+}
+
+/* Posiciona el componente de accesibilidad debajo del navbar */
+.accessibility-position {
+  position: absolute;
+  top: 120px; /* Ajusta esta altura según la altura de tu navbar */
+  left: 10px;
 }
 </style>

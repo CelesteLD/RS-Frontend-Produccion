@@ -1,6 +1,7 @@
 <template>
   <div class="main-page">
     <AppNavbar currentPage="inicio" />
+    <AccessibilityMenu class="accessibility-position" />
     <div v-if="isUnderDevelopment" class="development-container">
       <h1 class="development-message">Proyecto en desarrollo</h1>
     </div>
@@ -36,6 +37,7 @@ import PublicidadBanner from '../../MainPage/Components/PublicidadBanner.vue';
 import NewsBanner from '../../MainPage/Components/NewsBanner.vue';
 import TopDonorRestaurants from '../../MainPage/Components/TopDonorRestaurants.vue';
 import AppFooter from '../../Generales/Footer/AppFooter.vue';
+import AccessibilityMenu from '../../Generales/Accesibilidad/AccesibilityMenu.vue';
 import axios from '../../../backend.js';
 
 export default {
@@ -44,7 +46,8 @@ export default {
     PublicidadBanner,
     NewsBanner,
     TopDonorRestaurants,
-    AppFooter
+    AppFooter,
+    AccessibilityMenu
   },
   data() {
     return {
@@ -103,6 +106,13 @@ export default {
   box-sizing: border-box;
   min-height: 100vh;
   justify-content: space-between;
+  position: relative; /* Para asegurar que los elementos hijos puedan ser posicionados */
+}
+
+.accessibility-position {
+  position: absolute; /* Permite posicionar el elemento relativo al contenedor padre */
+  top: 120px; /* Ajusta esta altura según la altura de tu navbar */
+  left: 10px; /* Separación desde el borde izquierdo */
 }
 
 .development-container {
