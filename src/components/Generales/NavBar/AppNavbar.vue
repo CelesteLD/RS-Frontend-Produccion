@@ -154,6 +154,11 @@ export default {
   color: white; /* Texto blanco para la página activa */
 }
 
+.partner-logo-eu {
+  max-width: 130px;
+
+}
+
 /* Estilos para el menú desplegable */
 @media (max-width: 768px) {
   .logos {
