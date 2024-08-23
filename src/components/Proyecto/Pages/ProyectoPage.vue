@@ -30,8 +30,25 @@ export default {
     AppFooter,
     AccessibilityMenu, // Declara el componente AccessibilityMenu
   },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    handleScroll() {
+      if (window.innerWidth <= 768) {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        const accessibilityMenu = document.querySelector('.accessibility-position');
+        accessibilityMenu.style.top = `${120 + currentScroll}px`;
+      }
+    }
+  }
 };
 </script>
+
+
 
 <style scoped>
 .content {
@@ -52,9 +69,10 @@ export default {
 
 /* Posiciona el componente de accesibilidad debajo del navbar */
 .accessibility-position {
-  position: absolute;
+  position: fixed;
   top: 120px; /* Ajusta esta altura según la altura de tu navbar */
   left: 10px;
+  z-index: 1000;
 }
 
 /* Estilos adicionales para asegurar que el footer esté centrado */
@@ -63,5 +81,13 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .accessibility-position {
+    position: absolute; /* Permite que el componente se desplace con el contenido */
+    top: 120px; /* Ajusta esta altura según la altura de tu navbar */
+    left: 10px;
+  }
 }
 </style>

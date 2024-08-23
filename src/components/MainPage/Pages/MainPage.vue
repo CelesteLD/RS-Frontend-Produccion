@@ -81,18 +81,29 @@ export default {
     },
     updateActiveDotVertical(index) {
       this.activeDotVertical = index;
+    },
+    handleScroll() {
+      if (window.innerWidth <= 768) {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        const accessibilityMenu = document.querySelector('.accessibility-position');
+        accessibilityMenu.style.top = `${120 + currentScroll}px`;
+      }
     }
   },
   mounted() {
     this.fetchNoticias();
-    
-    // Verificar si la fecha actual es menor al 2 de septiembre de 2024
+    window.addEventListener('scroll', this.handleScroll);
+
+    // Verificar si la fecha actual es menor al 29 de septiembre de 2024
     const currentDate = new Date();
     const projectStartDate = new Date('2024-09-29');
 
     if (currentDate >= projectStartDate) {
       this.isUnderDevelopment = false;
     }
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 };
 </script>
@@ -110,9 +121,16 @@ export default {
 }
 
 .accessibility-position {
-  position: absolute; /* Permite posicionar el elemento relativo al contenedor padre */
+  position: fixed; /* Permite que el elemento se mantenga en su posición mientras se desplaza */
   top: 120px; /* Ajusta esta altura según la altura de tu navbar */
   left: 10px; /* Separación desde el borde izquierdo */
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .accessibility-position {
+    position: absolute; /* Permite que el elemento se desplace con el contenido */
+  }
 }
 
 .development-container {

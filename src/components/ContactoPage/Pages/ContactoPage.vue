@@ -132,7 +132,20 @@ export default {
       };
       this.showContactForm = false;
       this.selectedBox = '';
+    },
+    handleScroll() {
+      if (window.innerWidth <= 768) {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        const accessibilityMenu = document.querySelector('.accessibility-position');
+        accessibilityMenu.style.top = `${120 + currentScroll}px`;
+      }
     }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 };
 </script>
@@ -209,8 +222,15 @@ button:hover {
 
 /* Posiciona el componente de accesibilidad debajo del navbar */
 .accessibility-position {
-  position: absolute;
+  position: fixed;
   top: 120px; /* Ajusta esta altura según la altura de tu navbar */
   left: 10px;
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .accessibility-position {
+    position: absolute;
+  }
 }
 </style>
